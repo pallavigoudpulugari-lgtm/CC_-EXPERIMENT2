@@ -1,0 +1,121 @@
+EXPERIMENT-1.1 CONTAINS DUPLICATES(LEETCODE NO-217)
+
+AIM:
+To design and implement an efficient algorithm to increment a large integer represented as an array of digits by one and return the resulting array.
+ALGORITHM:
+Start from the last digit of the array.
+If the current digit is less than 9:
+Increment it by 1.
+Return the array.
+If the current digit is 9:
+Change it to 0 and move to the previous digit.
+Repeat until all digits are processed.
+If all digits were 9 (e.g., [9,9,9]):
+Create a new array with size n+1.
+Set the first digit to 1.
+Remaining digits will be 0.
+Return the resulting array.
+CODE:
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> plusOne(vector<int>& digits) {
+    
+    for (int i = digits.size() - 1; i >= 0; i--) {
+        
+        if (digits[i] < 9) {
+            digits[i]++;
+            return digits;
+        }
+        
+        digits[i] = 0;
+    }
+    
+    digits.insert(digits.begin(), 1);
+    return digits;
+}
+
+int main() {
+    
+    int n;
+    cout << "Enter number of digits: ";
+    cin >> n;
+    
+    vector<int> digits(n);
+    
+    cout << "Enter digits: ";
+    for (int i = 0; i < n; i++) {
+        cin >> digits[i];
+    }
+    
+    vector<int> result = plusOne(digits);
+    
+    cout << "Result after adding one: ";
+    for (int digit : result) {
+        cout << digit << " ";
+    }
+    
+    return 0;
+}
+
+EXPERIMENT- To design and implement an efficient algorithm to determine whether an array contains duplicate elements such that the indices of the duplicate elements differ by at most k
+
+ALGORITHM:
+Create an empty hash map.
+Traverse the array from left to right.
+For each element:
+If the element already exists in the hash map:
+Calculate the difference between the current index and the stored index.
+If the difference is less than or equal to k, return true.
+Update the element's index in the hash map.
+If no such duplicate pair is found, return false.
+
+CODE:
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+bool containsNearbyDuplicate(vector<int>& nums, int k) {
+    
+    unordered_map<int, int> mp;
+    
+    for(int i = 0; i < nums.size(); i++) {
+        
+        if(mp.find(nums[i]) != mp.end()) {
+            
+            if(i - mp[nums[i]] <= k) {
+                return true;
+            }
+        }
+        
+        mp[nums[i]] = i;
+    }
+    
+    return false;
+}
+
+int main() {
+    
+    int n, k;
+    
+    cout << "Enter size of array: ";
+    cin >> n;
+    
+    vector<int> nums(n);
+    
+    cout << "Enter array elements: ";
+    for(int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+    
+    cout << "Enter value of k: ";
+    cin >> k;
+    
+    if(containsNearbyDuplicate(nums, k))
+        cout << "True";
+    else
+        cout << "False";
+    
+    return 0;
+}
